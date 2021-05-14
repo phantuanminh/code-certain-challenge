@@ -9,7 +9,7 @@ services:
         tty: true
         ports:
             - "3000:3000"
-        volumes: 
+        volumes:
             - ./frontend:/app
             - /app/node_modules
         networks:
@@ -31,7 +31,7 @@ services:
         - backend
 
     api:
-        build: 
+        build:
             context: ./backend
             dockerfile: Dockerfile
         command: gunicorn --bind 0.0.0.0:5000 app:app
@@ -43,7 +43,7 @@ services:
             MONGODB_PASSWORD: "apipassword"
         volumes:
             - appdata:/var/www/
-        depends_on: 
+        depends_on:
             - mongodb
         networks:
             - frontend
