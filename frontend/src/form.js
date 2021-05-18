@@ -1,40 +1,55 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-import axios from 'axios';
-
-export default class Form extends Component {
-  constructor(props) {
-    super(props);
+export default class Form extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+        name: '',
+        num: '',
+      };
   }
 
-  addFirst(name, num) {
+  handleChange = event => {
+    /*
+      Because we named the inputs to match their
+      corresponding values in state, it's
+      super easy to update the state
+    */
+    this.setState( { [event.target.name]: event.target.value } );
   }
 
-  addEnd(name, num) {
+  addFirst = event => {
+    event.preventDefault();
 
-  }
+    const data = {
+      name: this.state.name,
+      num: this.state.num
+    };
 
-  state = {
-    persons: []
-  }
-
-  componentDidMount() {
-    axios.get(`https://jsonplaceholder.typicode.com/users`)
+    axios.get(`http://localhost:5000/api`, { data })
       .then(res => {
-        console.log(res)
-        this.setState({ persons: res.data });
+        console.log(res);
+        console.log(res.data);
       })
   }
 
   render() {
     return (
       <div>
-        <p>
-        max_length
-        </p>
-        <ul>
-          { this.state.persons.map(person => <li>{person.name}</li>)}
-        </ul>
+        <form>
+          <label>
+            First name: <br />
+            <input type="text" name="name" onChange={this.handleChange} />
+          </label>
+          <br />
+          <label>
+            Number: <br />
+            <input type="number" name="num" onChange={this.handleChange} />
+          </label>
+          <br />
+          <button type="submit" onClick={this.addFirst}>Add First</button>
+          <button type="submit" onClick={this.addEnd}>Add End</button>
+        </form>
       </div>
     )
   }

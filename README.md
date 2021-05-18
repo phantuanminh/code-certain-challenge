@@ -25,3 +25,7 @@ mongo -u admin -p
 
 **2. Production Purpose**
 * To be updated
+
+* https://blog.miguelgrinberg.com/post/how-to-create-a-react--flask-project
+* https://www.youtube.com/watch?v=GMppyAPbLYk
+* https://www.youtube.com/watch?v=06pWsB_hoD4

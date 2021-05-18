@@ -1,10 +1,11 @@
 import datetime
 import os
 
-from flask import Flask, Response, request
+from flask import Flask, Response, request, jsonify
 from flask_mongoengine import MongoEngine
 
 app = Flask(__name__)
+
 app.config['MONGODB_SETTINGS'] = {
     'host': os.environ['MONGODB_HOST'],
     'username': os.environ['MONGODB_USERNAME'],
@@ -20,6 +21,10 @@ class Todo(db.Document):
     text = db.StringField()
     done = db.BooleanField(default=False)
     pub_date = db.DateTimeField(default=datetime.datetime.now)
+
+@app.route('/time')
+def get_current_time():
+    return {'time': time.time()}
 
 @app.route("/api")
 def index():
