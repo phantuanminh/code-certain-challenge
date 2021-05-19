@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Form from './form';
 
 function App() {
+  useEffect(() => {
+    fetch('/api').then(response =>
+      response.json().then(data => {
+        console.log(data);
+      })
+      );
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Form />
-      </header>
+      hello
     </div>
   );
 }

@@ -16,15 +16,13 @@ app.config['MONGODB_SETTINGS'] = {
 db = MongoEngine()
 db.init_app(app)
 
+
 class Todo(db.Document):
     title = db.StringField(max_length=60)
     text = db.StringField()
     done = db.BooleanField(default=False)
     pub_date = db.DateTimeField(default=datetime.datetime.now)
 
-@app.route('/time')
-def get_current_time():
-    return {'time': time.time()}
 
 @app.route("/api")
 def index():
@@ -34,6 +32,24 @@ def index():
     Todo.objects(title__contains="B").update(set__text="Hello world")
     todos = Todo.objects().to_json()
     return Response(todos, mimetype="application/json", status=200)
+
+
+@app.route("/api2")
+def index2():
+    Todo.objects().delete()
+    Todo(title="Simple todo A", text="12345678910").save()
+    Todo(title="Simple todo B", text="12345678910").save()
+    Todo.objects(title__contains="B").update(set__text="Hello world")
+    todos = Todo.objects().to_json()
+    return jsonify({'x': '1', 'y': '2'})
+
+
+# @app.route('/add_first/', methods=['GET'])
+# def add_first():
+#     name = request.args.get('name')
+#     num = request.args.get('num')
+#     return jsonify({'name': name, 'num': num})
+
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
